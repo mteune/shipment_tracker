@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipment Tracker</title>
+    {%load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+    <body>
+        <div id="wrapper">
+            {% if user == logged_user %}
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-7">
+                    <h4>Hello {{logged_user.first_name}}, Welcome to your profile page!</h4> 
+                </div>
+                <div class="col-md-2">
+                    <a href="/profile/{{user.id}}"><button>Profile</button></a> / <a href="/logout"><button>Logout</button></a>
+                </div>
+            </div>
+            <center>
+                <div class="row">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-3">
+                    {% if user.profile_pic %}
+                        <img src="{{ user.profile_pic.url }}" alt="Profile Picture" width="200px">
+                    {% endif %}
+                    <br>
+
+                    <button onclick="myFunction()">Update Profile Pic</button>
+                    <script>
+                    function myFunction() {
+                    window.open("/profilepic/{{user.id}}/", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=400");
+                    }
+                    </script>
+
+
+                    <br>
+                    <b>First Name:</b> {{user.first_name}}
+                    <br>
+                    <b>Last Name:</b> {{user.last_name}}
+                    <br>
+                    <b>Email:</b> {{user.email}}
+                    <br>
+                    <b>Last Updated On:</b> {{user.updated_at}}
+                    <br>
+                    </div>
+                    <div class="col-md-3">
+                        <br>
+                        {% if messages %}
+                        <ul>
+                        {% for message in messages %}
+                        <ul>{{ message }}</ul>
+                        {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <form action="/updateprofile/{{user.id}}/" method="POST" novalidate enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <label for="first_name">First Name:</label>
+                            <input type="text" name="first_name" id="first_name" value="{{user.first_name}}">
+                            <br>
+                            <label for="last_name">Last Name:</label>
+                            <input type="text" name="last_name" id="last_name" value="{{user.last_name}}">
+                            <br>
+                            <label for="email">Email:</label>
+                            <input type="text" name="email" id="email" value="{{user.email}}">
+                            <br>
+                            <input type="submit" value="Update Profile"> 
+                        </form>
+                    </div>
+                    <div class="col-md-3">
+                    </div>
+                </div>
+                <br>
+                <a href="/ships"><button>All Of The Shipments</button></a>
+            </center>
+            {% else %}
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-7">
+                    <h4>Hey {{logged_user.first_name}}, this is {{user.first_name}}'s profile...</h4> 
+                </div>
+                <div class="col-md-2">
+                    <a href="/profile/{{user.id}}"><button>Profile</button></a> / <a href="/logout"><button>Logout</button></a>
+                </div>
+            </div>
+            <center>
+            <div class="row">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4">
+                {% if user.profile_pic %}
+                    <img src="{{ user.profile_pic.url }}" alt="Profile Picture" width="200px">
+                {% endif %}
+                <br>
+                <b>First Name:</b> {{user.first_name}}
+                    <br>
+                    <b>Last Name:</b> {{user.last_name}}
+                    <br>
+                    <b>Email:</b> {{user.email}}
+                    <br>
+                    <b>Last Updated On:</b> {{user.updated_at}}
+                <br>
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
+            <br>
+            <a href="/ships"><button>All Of The Shipments</button></a>
+        </center>
+         </div>       
+    {% endif %}
+    </body>
+</html>

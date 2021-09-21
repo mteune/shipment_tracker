@@ -1,0 +1,171 @@
+                   
+                            <div class="one_shipment">
+                                <button type="button" class="collapsible">{{ship.ship_start}}-{{ship.ship_end}} ({{ship.vessel_name}})</button>
+                                <div class="content">
+                                    <ul>
+                                        <b>Date Booked:</b> {{ship.date_booked}}
+                                    </ul>
+                                    <ul>
+                                        <b>Client:</b> {{ship.client}}
+                                    </ul>
+                                    <ul>
+                                        <b>Batch:</b> {{ship.batch}}
+                                    </ul>
+                                    <ul>
+                                        <b>Volume:</b> {{ship.volume}}
+                                    </ul>
+                                    <ul>
+                                        <b>Basis:</b> {{ship.basis}}
+                                    </ul>
+                                    <ul>
+                                        <b>Last Day to Price:</b> {{ship.last_day_pricing}}
+                                    </ul>
+                                    <ul>
+                                        <b>ETA Gray's Harbor:</b> {{ship.eta_gh}}
+                                    </ul>
+                                    <ul>
+                                        <b>ETD Gray's Harbor:</b> {{ship.etd_gh}}
+                                    </ul>
+                                    <ul>
+                                        <b>ETA Disport:</b> {{ship.eta_disport}}
+                                    </ul>
+                                    <ul>
+                                        <b>Notes:</b> {{ship.notes}}
+                                    </ul>
+                                    <br>
+
+                                    <img src="{{ ship.user.profile_pic.url }}" alt="Profile Picture" width="50px">
+                                    <ul>
+                                        <b>Last Updated By:</b> {{ship.user.first_name}} {{ship.user.last_name}}
+                                    </ul>
+                                    <ul>
+                                        <b>Last Updated On:</b> {{ship.updated_at}}
+                                    </ul>
+                                    <ul>
+                                    <a href="/ships/{{ship.id}}">Edit</a>/<a href="/delete/{{ship.id}}">Delete</a>
+                                    </ul>
+                                </div>
+                            </div> 
+                        
+                            <script>
+                                var coll = document.getElementsByClassName("collapsible");
+                                var i;
+                                
+                                for (i = 0; i < coll.length; i++) {
+                                  coll[i].addEventListener("click", function() {
+                                    this.classList.toggle("active");
+                                    var content = this.nextElementSibling;
+                                    if (content.style.display === "block") {
+                                      content.style.display = "none";
+                                    } else {
+                                      content.style.display = "block";
+                                    }
+                                  });
+                                }
+                            </script>
+
+
+
+
+                            {% if logged_user == user %}
+                            <a href="/ships/{{one_ship.id}}">Edit</a> / <a href="/delete/{{one_ship.id}}">Delete</a>
+                            {% endif %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            
+
+
+
+                            {% for ship in all_the_ships %}
+                            <tr>
+                                <th data-order='desc' data-field="date_booked" data-sortable="true">Date Booked</th>
+                                <th data-order='desc' data-field="client" data-sortable="true">Client</th>
+                                <th data-order='desc' data-field="batch" data-sortable="true">Batch</th>
+                                <th data-order='desc' data-field="volume" data-sortable="true">Volume</th>
+                                <th data-order='desc' data-field="basis" data-sortable="true">Basis</th>
+                                <th data-order='desc' data-field="ship_start" data-sortable="true">Shipment Start</th>
+                                <th data-order='desc' data-field="ship_end" data-sortable="true">Shipment End</th>
+                                <th data-order='desc' data-field="vessel_name" data-sortable="true">Vessel Name</th>
+                                <th data-order='desc' data-field="last_day_pricing" data-sortable="true">Last Day to Price</th>
+                                <th data-order='desc' data-field="eta_gh" data-sortable="true">ETA Gray's Harbor</th>
+                                <th data-order='desc' data-field="etd_gh" data-sortable="true">ETD Gray's Harbor</th>
+                                <th data-order='desc' data-field="eta_disport" data-sortable="true">ETA Disport</th>
+                                <th data-order='desc' data-field="notes" data-sortable="true">Notes</th>
+                                <th data-order='desc' data-field="user" data-sortable="true">Profile Pic</th>
+                                <th data-order='desc' data-field="created_at" data-sortable="true">Last Updated By</th>
+                                <th data-order='desc' data-field="updated_at" data-sortable="true">Last Updated</th>
+                                <th data-order='desc' data-field="objects" data-sortable="true">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ship.date_booked}}</td>
+                                <td>{{ship.client}}</td>
+                                <td>{{ship.batch}}</td>
+                                <td>{{ship.volume}}</td>
+                                <td>{{ship.basis}}</td>
+                                <td>{{ship.ship_start}}</td>
+                                <td>{{ship.ship_end}}</td>
+                                <td>{{ship.vessel_name}}</td>
+                                <td>{{ship.last_day_pricing}}</td>
+                                <td>{{ship.eta_gh}}</td>
+                                <td>{{ship.etd_gh}}</td>
+                                <td>{{ship.eta_disport}}</td>
+                                <td>{{ship.notes}}</td>
+                                <td><img src="{{ ship.user.profile_pic.url }}" alt="Profile Picture" width="50px"></td>
+                                <td>{{ship.user.first_name}} {{ship.user.last_name}}</td>
+                                <td>{{ship.updated_at}}</td>
+                                <td><a href="/ships/{{ship.id}}">Edit</a>/<a href="/delete/{{ship.id}}">Delete</a></td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                        
+
+
+                    <p>City: {{ one_ship.city }}</p>
+                    <p>Start Date: {{ one_ship.ship_start }}</p>
+                    <p>End Date: {{ one_ship.ship_end }}</p>
+                    <p>Plan: {{ one_ship.plan }}</p>
+                    <p>Created on: {{ one_ship.created_at }}</p>
+                    <p>Last updated: {{ one_ship.updated_at }}</p>
+
+                    {% if logged_user == user %}
+                    <a href="/ships/{{one_ship.id}}">Edit</a> / <a href="/delete/{{one_ship.id}}">Delete</a>
+                    {% endif %}
+                </div>

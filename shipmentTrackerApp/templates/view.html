@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipment Tracker</title>
+    {%load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="row">
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-7">
+                <h4>Hello {{user.first_name}}! Read About This Shipment...</h4> 
+            </div>
+            <div class="col-md-2">
+                <a href="/profile/{{user.id}}"><button>Profile</button></a> / <a href="/logout"><button>Logout</button></a>
+            </div>
+        </div>
+        <center>
+            <h1>{{one_ship.ship_start}}-{{one_ship.ship_end}} 
+                <br>{{one_ship.vessel_name}}</h1>
+                <div class="row">
+                    <div class="col-md-3">
+                    </div>
+                    <div class="col-md-3">
+                        <h3>Shipment Details</h3>
+                        <b>Date Booked:</b> {{one_ship.date_booked}}
+                        <br>
+                        <b>Client:</b> {{one_ship.client}}
+                        <br>
+                        <b>Batch:</b> {{one_ship.batch}}
+                        <br>
+                        <b>Volume:</b> {{one_ship.volume}}
+                        <br>
+                        <b>Basis:</b> {{one_ship.basis}}
+                        <br>
+                        <b>Last Day to Price:</b> {{one_ship.last_day_pricing}}
+                        <br>
+                        <b>ETA Gray's Harbor:</b> {{one_ship.eta_gh}}
+                        <br>
+                        <b>ETD Gray's Harbor:</b> {{one_ship.etd_gh}}
+                        <br>
+                        <b>ETA Disport:</b> {{one_ship.eta_disport}}
+                        <br>
+                        <b>Notes:</b> {{one_ship.notes}}
+                        <br>
+                        <br>
+                        <img src="{{ one_ship.user.profile_pic.url }}" alt="Profile Picture" width="50px">
+                        <br>
+                        <b>Last Updated By:</b> <a href="/profile/{{one_ship.user.id}}">{{one_ship.user.first_name}} {{one_ship.user.last_name}}</a>
+                        <br>
+                        <b>Last Updated On:</b> {{one_ship.updated_at}}
+                        <br>
+                    </div>
+                    <div class="col-md-3">
+                        <h3>Edit Your Shipment</h3>
+                        {% if messages %}
+                        <ul>
+                            {% for message in messages %}
+                            <ul>{{ message }}</ul>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        <form action="/update/{{ship.id}}/" method="POST" novalidate>
+                        {% csrf_token %}
+                            <label for="date_booked">Date Booked:</label>
+                            <input type="date" name="date_booked" required value="{{ship.date_booked|date:'Y-m-d'}}">
+                            <br>
+                            <label for="client">Client:</label>
+                            <select name="client" value="{{ship.client}}">
+                                <option value="Import Group">Import Group</option>
+                                <option value="GP Group">GP Group</option>
+                                <option value="LFUC">LFUC</option>
+                                <option value="GMC Consortium">GMC Consoritum</option>
+                                <option value="Simon">Simon</option>
+                            </select>
+                            <br>
+                            <label for="batch">Batch:</label>
+                            <input type="text" name="batch" value="{{ship.batch}}">
+                            <br>
+                            <label for="volume">Volume:</label>
+                            <input type="text" name="volume" value="{{ship.volume}}">
+                            <br>
+                            <label for="basis">Basis:</label>
+                            <input type="text" name="basis" value="{{ship.basis}}">
+                            <br>
+                            <label for="ship_start">Shipment Start:</label>
+                            <input type="date" name="ship_start" required value="{{ship.ship_start|date:'Y-m-d'}}">
+                            <br>
+                            <label for="ship_end">Shipment End:</label>
+                            <input type="date" name="ship_end" required value="{{ship.ship_end|date:'Y-m-d'}}">
+                            <br>
+                            <label for="vessel_name">Vessel Name:</label>
+                            <input type="text" name="vessel_name" required value="{{ship.vessel_name}}">
+                            <br>
+                            <label for="last_day_pricing">Last Day to Price:</label>
+                            <input type="date" name="last_day_pricing" required value="{{ship.last_day_pricing|date:'Y-m-d'}}">
+                            <br>
+                            <label for="eta_gh">ETA Gray's Harbor:</label>
+                            <input type="date" name="eta_gh" required value="{{ship.eta_gh|date:'Y-m-d'}}">
+                            <br>
+                            <label for="etd_gh">ETD Gray's Harbor:</label>
+                            <input type="date" name="etd_gh" required value="{{ship.etd_gh|date:'Y-m-d'}}">
+                            <br>
+                            <label for="eta_disport">ETA Disport:</label>
+                            <input type="date" name="eta_disport" required value="{{ship.eta_disport|date:'Y-m-d'}}">
+                            <br>
+                            <label for="notes">Notes:</label>
+                            <input type="textarea" name="notes" value="{{ship.notes}}">
+                            <br>
+                            <input type="submit" value="Update Shipment">
+                            <br>
+                        </form>
+                    </div>
+                        <div class="col-md-3">
+                        </div>
+                <br>
+                <a href="/ships"><button>All Of The Shipments</button></a>
+                </div>
+            </center>
+        </p>
+    </body>
+</html>

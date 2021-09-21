@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipment Tracker</title>
+    {%load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+    <body>
+        <div id="wrapper">
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-7">
+                    <h4>Success!!! Welcome {{user.first_name}}!</h4> 
+                </div>
+                <div class="col-md-2">
+                    <a href="/profile/{{user.id}}"><button>Profile</button></a> / <a href="/logout"><button>Logout</button></a>
+                </div>
+            </div>
+            <center>
+            <h1>All The Shipments</h1>
+            <div class="row">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-8">
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+                    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+                    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css" rel="stylesheet"/>
+                    <table id="table" data-toggle="table">
+                        <thead>
+                        <tr>
+                            <th data-order='desc' data-field="ship_start" data-sortable="true">Shipment Period</th>
+                            <th data-order='desc' data-field="vessel_name" data-sortable="true">Vessel Name</th>
+                            <th data-order='desc' data-field="last_day_pricing" data-sortable="true">Last Day to Price</th>
+                            <th data-order='desc' data-field="eta_gh" data-sortable="true">ETA Gray's Harbor</th>
+                            <th data-order='desc' data-field="objects" data-sortable="true">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for ship in all_the_ships %}
+                        <tr>
+                            <td>{{ship.ship_start|date:"m-d-Y"}} - {{ship.ship_end|date:"m-d-Y"}}</td>
+                            <td><a href="/view/{{ship.id}}">{{ship.vessel_name}}</a></td>
+                            <td>{{ship.last_day_pricing|date:"m-d-Y"}}</td>
+                            <td>{{ship.eta_gh|date:"m-d-Y"}}</td>
+                            <td><a href="/view/{{ship.id}}">Edit</a> / <a href="/delete/{{ship.id}}">Delete</a></td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-2">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <button onclick="myFunction()">Add Shipment</button>
+                    <script>
+                    function myFunction() {
+                    window.open("/addship", "_blank", "toolbar=yes,scrollbars=yes,resizable=yes,top=500,left=500,width=400,height=500");
+                    }
+                    </script>
+                </div>
+                <div class="col-md-7">
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+
+
+

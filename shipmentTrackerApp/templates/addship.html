@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipment Tracker</title>
+    {%load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+    <body>
+        <center>
+            <div id="wrapper">
+                <h1>Add Shipment Page</h1>
+                <div class="subcontents">
+                    <h4>Enter a Shipment Here:</h4>
+                    {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                        {{ message }}
+                        <br>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <form action="/ships/create" method="POST">
+                    {% csrf_token %}
+                    <label for="date_booked">Date Booked:</label>
+                    <input type="date" name="date_booked">
+                    <br>
+                    <label for="client">Client:</label>
+                    <select name="client">
+                        <option value="Import Group">Import Group</option>
+                        <option value="GP Group">GP Group</option>
+                        <option value="LFUC">LFUC</option>
+                        <option value="GMC Consortium">GMC Consoritum</option>
+                        <option value="Simon">Simon</option>
+                    </select>
+                    <br>
+                    <label for="batch">Batch:</label>
+                    <input type="text" name="batch">
+                    <br>
+                    <label for="volume">Volume:</label>
+                    <input type="text" name="volume">
+                    <br>
+                    <label for="basis">Basis:</label>
+                    <input type="text" name="basis">
+                    <br>
+                    <label for="ship_start">Shipment Start:</label>
+                    <input type="date" name="ship_start">
+                    <br>
+                    <label for="ship_end">Shipment End:</label>
+                    <input type="date" name="ship_end">
+                    <br>
+                    <label for="vessel_name">Vessel Name:</label>
+                    <input type="text" name="vessel_name" value="TBN">
+                    <br>
+                    <label for="last_day_pricing">Last Day to Price:</label>
+                    <input type="date" name="last_day_pricing">
+                    <br>
+                    <label for="eta_gh">ETA Gray's Harbor:</label>
+                    <input type="date" name="eta_gh">
+                    <br>
+                    <label for="etd_gh">ETD Gray's Harbor:</label>
+                    <input type="date" name="etd_gh">
+                    <br>
+                    <label for="eta_disport">ETA Disport:</label>
+                    <input type="date" name="eta_disport">
+                    <br>
+                    <label for="notes">Notes:</label>
+                    <input type="text" name="notes" value="None">
+                    <br>
+                    <br>
+                    <input type="submit" value="Add Shipment">
+                    </form>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </center>
+    </body>
+</html>
